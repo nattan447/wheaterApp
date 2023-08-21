@@ -14,11 +14,12 @@ import { useState, useEffect, useRef } from "react";
 import React from "react";
 import facestyle from "../styles/facestyle";
 
-export default function Interface() {
+export default function Interface({ navigation }) {
   const [input, Setinput] = useState("");
   const handletxt = (text) => Setinput(text);
-  const [nodatafound, SetNodatafound] = useState(undefined);
-  const [dt, setData] = useState(undefined);
+  const [nodatafound, SetNodatafound] = useState("");
+  const [isloading, setIsloading] = useState(true);
+  const [dt, setData] = useState([]);
   const apiKey = "f90eecc7a82b453d7ddc570ae56579c1";
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${input}&appid=${apiKey}&units=metric`;
 
@@ -28,15 +29,31 @@ export default function Interface() {
       .then((data) => {
         setData(data.main.temp);
         SetNodatafound(undefined);
+        navigation.navigate(
+          "info",
+
+          {
+            input,
+            weather: {
+              temp: data.main.temp,
+              state: data.weather[0].main,
+              description: data.weather[0].description,
+            },
+          }
+        );
       })
       .catch((error) => {
         SetNodatafound("local não encontrado");
+      })
+      .finally(() => {
+        setIsloading(false);
       });
+
     Setinput("");
   };
 
   return (
-    <View style={facestyle.container}>
+    <SafeAreaView style={facestyle.container}>
       <View style={facestyle.searchview}>
         <TextInput
           value={input}
@@ -55,6 +72,6 @@ export default function Interface() {
       <View>
         <Text>a temperatura é:{dt}</Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

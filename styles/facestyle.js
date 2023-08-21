@@ -3,6 +3,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    backgroundColor: "white",
   },
   searchview: {
     flexDirection: "row",
