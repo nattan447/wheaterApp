@@ -3,7 +3,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: "cornflowerblue",
   },
   searchview: {
     flexDirection: "row",
@@ -22,5 +22,28 @@ export default StyleSheet.create({
     width: 30,
     marginLeft: 10,
     marginTop: 4,
+  },
+  list: {
+    marginTop: 190,
+    height: 240,
+    alignItems: "center",
+  },
+  listitem: {
+    backgroundColor: "white",
+    margin: 5,
+    height: 200,
+    width: 190,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cityicon: {
+    height: 140,
+    width: 140,
+  },
+  listtxt: {
+    color: "black",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });

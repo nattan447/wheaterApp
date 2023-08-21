@@ -3,7 +3,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
 
-    backgroundColor: "white",
+    backgroundColor: "cornflowerblue",
   },
   headertxt: {
     fontSize: 27,
@@ -12,9 +12,11 @@ export default StyleSheet.create({
     marginLeft: 30,
   },
   cityname: {
-    fontSize: 23,
+    fontSize: 50,
     marginTop: 30,
     textAlign: "center",
+    fontWeight: "bold",
+    color: "white",
   },
   cloudsimg: {
     height: 130,
@@ -22,10 +24,22 @@ export default StyleSheet.create({
   },
   infoview: {
     alignItems: "center",
-    marginTop: 100,
+    marginTop: 50,
+
+    height: 400,
+    justifyContent: "center",
+    borderRadius: 10,
+    width: 360,
+    alignSelf: "center",
   },
   temperature: {
-    fontSize: 40,
+    fontSize: 60,
     marginTop: 20,
+    color: "white",
+    fontWeight: "bold",
+  },
+  weatherstate: {
+    fontSize: 20,
+    color: "white",
   },
 });

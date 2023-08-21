@@ -15,9 +15,8 @@ import React from "react";
 import Infostyle from "../styles/infostyle";
 import infostyle from "../styles/infostyle";
 export default function Info({ route }) {
-  const { weather, input } = route.params;
+  const { weather } = route.params;
   const [img, Setimg] = useState(null);
-
   useEffect(() => {
     switch (weather.state) {
       case "Clear":
@@ -35,11 +34,11 @@ export default function Info({ route }) {
   return (
     <View style={Infostyle.container}>
       <Text style={infostyle.headertxt}>clima hoje</Text>
-      <Text style={infostyle.cityname}>{input}</Text>
+      <Text style={infostyle.cityname}>{weather.cityname}</Text>
       <View style={infostyle.infoview}>
         <Image source={img} style={infostyle.cloudsimg}></Image>
         <Text style={infostyle.temperature}>{weather.temp}°</Text>
-        <Text>{weather.state}</Text>
+        <Text style={infostyle.weatherstate}>{weather.state}</Text>
       </View>
     </View>
   );

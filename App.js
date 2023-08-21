@@ -18,7 +18,7 @@ const WeatherApp = ({ navigation }) => {
           options={{
             title: null,
             headerStyle: {
-              backgroundColor: "white",
+              backgroundColor: "cornflowerblue",
             },
             headerShadowVisible: false,
           }}
@@ -28,7 +28,7 @@ const WeatherApp = ({ navigation }) => {
           component={Info}
           options={{
             title: null,
-            headerStyle: { backgroundColor: "white" },
+            headerStyle: { backgroundColor: "cornflowerblue" },
             headerShadowVisible: false,
           }}
         />
