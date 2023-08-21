@@ -16,4 +16,16 @@ export default StyleSheet.create({
     marginTop: 30,
     textAlign: "center",
   },
+  cloudsimg: {
+    height: 130,
+    width: 130,
+  },
+  infoview: {
+    alignItems: "center",
+    marginTop: 100,
+  },
+  temperature: {
+    fontSize: 40,
+    marginTop: 20,
+  },
 });
