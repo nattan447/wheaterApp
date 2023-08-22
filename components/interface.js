@@ -29,24 +29,25 @@ export default function Interface({ navigation }) {
   const apiKey = "f90eecc7a82b453d7ddc570ae56579c1";
 
   const search = () => {
+    //chama api
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${input}&appid=${apiKey}&units=metric`
     )
       .then((response) => response.json())
       .then((data) => {
-        navigation.navigate(
-          "info",
+        navigation.navigate("info", {
+          weather: {
+            temp: data.main.temp,
+            state: data.weather[0].main,
+            description: data.weather[0].description,
+            cityname: input,
+          },
+        });
+        //se tiver os dados certos chama a função que cria a lista
+        if (data.main.temp != undefined) {
+          createlist();
+        }
 
-          {
-            weather: {
-              temp: data.main.temp,
-              state: data.weather[0].main,
-              description: data.weather[0].description,
-              cityname: input,
-            },
-          }
-        );
-        data.main.temp != undefined ? createlist() : undefined;
         SetNodatafound(undefined);
       })
       .catch((error) => {
@@ -60,18 +61,14 @@ export default function Interface({ navigation }) {
     Setinput("");
   };
   function createlist() {
-    const listobj = [...list, { cityname: input, id: counter }];
+    //evita de os lugares recentes aparecam repetidos
+    const norepeatname = list.filter((Elemento) => Elemento.cityname != input);
+    const listobj = [...norepeatname, { cityname: input, id: counter }];
     Setlist(listobj);
   }
-  // async function Takename(content) {
-  //   await Setinput(content);
-  //   alert("pegou");
-  // }
 
-  //ir pra outra tela quando clica na imagem
-  async function handlerecentplaces(name) {
-    // await Takename(name);
-
+  function handlerecentplaces(name) {
+    //chama api quando clico em algum lugar recente
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${name}&appid=${apiKey}&units=metric`
     )
