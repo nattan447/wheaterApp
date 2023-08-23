@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import colors from "./colors";
 export default StyleSheet.create({
   container: {
     flex: 1,
@@ -42,4 +43,5 @@ export default StyleSheet.create({
     fontSize: 20,
     color: "white",
   },
+  recentplaces: {},
 });

@@ -1,13 +1,13 @@
 import { StyleSheet } from "react-native";
+import colors from "./colors";
 export default StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "cornflowerblue",
+    backgroundColor: "#010A43",
   },
   searchview: {
     flexDirection: "row",
-    marginTop: 100,
   },
   input: {
     backgroundColor: "white",
@@ -24,7 +24,7 @@ export default StyleSheet.create({
     marginTop: 4,
   },
   list: {
-    marginTop: 190,
+    marginTop: 60,
     height: 240,
     alignItems: "center",
   },
@@ -42,8 +42,16 @@ export default StyleSheet.create({
     width: 140,
   },
   listtxt: {
-    color: "black",
-    fontSize: 20,
+    color: "#FF2E63",
+    fontSize: 23,
     fontWeight: "bold",
+  },
+  rescentplaces: {
+    fontSize: 30,
+    color: "white",
+    fontWeight: "bold",
+    textTransform: "uppercase",
+
+    marginTop: 100,
   },
 });

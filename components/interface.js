@@ -16,9 +16,12 @@ import { useState, useEffect, useRef } from "react";
 import React from "react";
 import facestyle from "../styles/facestyle";
 import config from "../configs";
+import { LinearGradient } from "expo-linear-gradient";
 export default function Interface({ navigation }) {
   const numcolum = 2;
 
+  //renderizar
+  useEffect(() => {}, []);
   const [counter, Setcounter] = useState(0);
   const [list, Setlist] = useState([]);
 
@@ -63,8 +66,13 @@ export default function Interface({ navigation }) {
   };
   function createlist() {
     //evita de os lugares recentes aparecam repetidos
-    const norepeatname = list.filter((Elemento) => Elemento.cityname != input);
-    const listobj = [...norepeatname, { cityname: input, id: counter }];
+    const norepeatname = list.filter(
+      (Elemento) => Elemento.cityname.toLowerCase() != input.toLowerCase()
+    );
+    const listobj = [
+      ...norepeatname,
+      { cityname: input.toLowerCase(), id: counter },
+    ];
     Setlist(listobj);
   }
   function handlerecentplaces(name) {
@@ -111,7 +119,6 @@ export default function Interface({ navigation }) {
 
   return (
     <SafeAreaView style={facestyle.container}>
-      <Switch value={true}></Switch>
       <View style={facestyle.searchview}>
         <TextInput
           value={input}
@@ -128,10 +135,8 @@ export default function Interface({ navigation }) {
       </View>
       <Text style={{ color: "red" }}>{nodatafound}</Text>
 
+      <Text style={facestyle.rescentplaces}>Lugares recentes</Text>
       <View style={facestyle.list}>
-        <Text style={{ fontSize: 30, fontWeight: "bold" }}>
-          Lugares recentes
-        </Text>
         <FlatList
           numColumns={numcolum}
           data={list}

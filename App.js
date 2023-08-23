@@ -6,6 +6,7 @@ import Interface from "./components/interface";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Info from "./components/info";
+import { LinearGradient } from "expo-linear-gradient";
 const Stack = createNativeStackNavigator();
 const WeatherApp = ({ navigation }) => {
   const oi = "aa";
@@ -18,7 +19,7 @@ const WeatherApp = ({ navigation }) => {
           options={{
             title: null,
             headerStyle: {
-              backgroundColor: "cornflowerblue",
+              backgroundColor: "#010A43",
             },
             headerShadowVisible: false,
           }}
