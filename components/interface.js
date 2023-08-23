@@ -15,7 +15,7 @@ import {
 import { useState, useEffect, useRef } from "react";
 import React from "react";
 import facestyle from "../styles/facestyle";
-import config from "../config";
+// import config from "../config";
 export default function Interface({ navigation }) {
   const numcolum = 2;
 
@@ -27,7 +27,7 @@ export default function Interface({ navigation }) {
   const [nodatafound, SetNodatafound] = useState("");
   const [isloading, setIsloading] = useState(true);
 
-  const apiKey = config.apikey;
+  // const apiKey = config.apikey;
 
   const search = () => {
     //chama api
