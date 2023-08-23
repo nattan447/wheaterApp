@@ -10,11 +10,12 @@ import {
   TextInput,
   Image,
   Switch,
+  Alert,
 } from "react-native";
 import { useState, useEffect, useRef } from "react";
 import React from "react";
 import facestyle from "../styles/facestyle";
-
+import config from "../config";
 export default function Interface({ navigation }) {
   const numcolum = 2;
 
@@ -26,7 +27,7 @@ export default function Interface({ navigation }) {
   const [nodatafound, SetNodatafound] = useState("");
   const [isloading, setIsloading] = useState(true);
 
-  const apiKey = "f90eecc7a82b453d7ddc570ae56579c1";
+  const apiKey = config.apikey;
 
   const search = () => {
     //chama api
@@ -66,7 +67,6 @@ export default function Interface({ navigation }) {
     const listobj = [...norepeatname, { cityname: input, id: counter }];
     Setlist(listobj);
   }
-
   function handlerecentplaces(name) {
     //chama api quando clico em algum lugar recente
     fetch(
