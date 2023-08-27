@@ -17,9 +17,13 @@ import React from "react";
 import facestyle from "../styles/facestyle";
 import config from "../configs";
 import { LinearGradient } from "expo-linear-gradient";
-export default function Interface({ navigation }) {
-  const numcolum = 2;
+import Places from "@react-native-async-storage/async-storage";
+import { useTheme } from "@react-navigation/native";
 
+export default function Interface({ navigation }) {
+  const apiKey = config.apikey;
+  const numcolum = 2;
+  const country_name = "Brasil";
   //renderizar
   useEffect(() => {}, []);
   const [counter, Setcounter] = useState(0);
@@ -29,8 +33,39 @@ export default function Interface({ navigation }) {
   const handletxt = (text) => Setinput(text);
   const [nodatafound, SetNodatafound] = useState("");
   const [isloading, setIsloading] = useState(true);
+  const [dado, setDado] = useState();
+  const [arrayinput, Setarrayinput] = useState([]);
+  const [stock, Setstock] = useState();
 
-  const apiKey = config.apikey;
+  async function store(key, value) {
+    try {
+      Places.setItem(key, value);
+      console.log("deu bom");
+    } catch {
+      console.log("deu merda");
+    }
+  }
+
+  const takedata = async (key) => {
+    try {
+      const nameplacce = await Places.getItem(key);
+
+      setDado(nameplacce);
+    } catch {
+      alert("deu ruim");
+    }
+  };
+
+  useEffect(() => {
+    takedata("name");
+  }, []);
+
+  useEffect(() => {
+    //string passada pelo storage vira array
+    if (dado != undefined) {
+      Setstock(dado.split(","));
+    }
+  }, [dado]);
 
   const search = () => {
     //chama api
@@ -39,6 +74,13 @@ export default function Interface({ navigation }) {
     )
       .then((response) => response.json())
       .then((data) => {
+        fetch(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${data.coord.lat}&lon=${data.coord.lon}&appid=${apiKey}`
+        )
+          .then((response) => response.json())
+          .then((json) => console.log(json))
+          .catch((error) => console.log(error));
+
         navigation.navigate("info", {
           weather: {
             temp: data.main.temp,
@@ -49,12 +91,15 @@ export default function Interface({ navigation }) {
         });
         //se tiver os dados certos chama a função que cria a lista
         if (data.main.temp != undefined) {
+          //esse estado pega todos os inputs os colocando em um array
+          Setarrayinput((currentvalue) => [...currentvalue, input]);
           createlist();
         }
 
         SetNodatafound(undefined);
       })
       .catch((error) => {
+        console.log(error);
         SetNodatafound("local não encontrado");
       })
       .finally(() => {
@@ -75,6 +120,14 @@ export default function Interface({ navigation }) {
     ];
     Setlist(listobj);
   }
+
+  useEffect(() => {
+    //aqui toda vez que o arrayinput é chamado(chama a função search),todos elementos do array é passado com uma string para o assyncstorage
+    let mystr = "";
+    arrayinput.map((elemento) => (mystr += elemento + ","));
+    store("name", mystr);
+  }, [arrayinput]);
+
   function handlerecentplaces(name) {
     //chama api quando clico em algum lugar recente
     fetch(
@@ -134,7 +187,6 @@ export default function Interface({ navigation }) {
         </TouchableOpacity>
       </View>
       <Text style={{ color: "red" }}>{nodatafound}</Text>
-
       <Text style={facestyle.rescentplaces}>Lugares recentes</Text>
       <View style={facestyle.list}>
         <FlatList

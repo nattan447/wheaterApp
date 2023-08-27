@@ -4,17 +4,17 @@ export default StyleSheet.create({
   container: {
     flex: 1,
 
-    backgroundColor: "cornflowerblue",
+    backgroundColor: "#010A43",
   },
-  headertxt: {
+  todaytxt: {
     fontSize: 27,
     fontWeight: "bold",
     textTransform: "uppercase",
     marginLeft: 30,
+    color: "white",
   },
   cityname: {
-    fontSize: 50,
-    marginTop: 30,
+    fontSize: 30,
     textAlign: "center",
     fontWeight: "bold",
     color: "white",
@@ -25,7 +25,6 @@ export default StyleSheet.create({
   },
   infoview: {
     alignItems: "center",
-    marginTop: 50,
 
     height: 400,
     justifyContent: "center",
@@ -35,7 +34,7 @@ export default StyleSheet.create({
   },
   temperature: {
     fontSize: 60,
-    marginTop: 20,
+    marginTop: 10,
     color: "white",
     fontWeight: "bold",
   },
@@ -43,5 +42,7 @@ export default StyleSheet.create({
     fontSize: 20,
     color: "white",
   },
-  recentplaces: {},
+  todayview: {
+    alignItems: "center",
+  },
 });

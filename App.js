@@ -29,7 +29,7 @@ const WeatherApp = ({ navigation }) => {
           component={Info}
           options={{
             title: null,
-            headerStyle: { backgroundColor: "cornflowerblue" },
+            headerStyle: { backgroundColor: "#010A43" },
             headerShadowVisible: false,
           }}
         />
