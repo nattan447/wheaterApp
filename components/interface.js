@@ -26,8 +26,11 @@ export default function Interface({ navigation }) {
   const country_name = "Brasil";
   //renderizar
   useEffect(() => {}, []);
+  const [stock, Setstock] = useState();
   const [counter, Setcounter] = useState(0);
-  const [list, Setlist] = useState([]);
+  const [list, Setlist] = useState(
+    stock != null ? [{ cityname: stock[0], id: 30 }] : []
+  );
 
   const [input, Setinput] = useState("");
   const handletxt = (text) => Setinput(text);
@@ -35,7 +38,6 @@ export default function Interface({ navigation }) {
   const [isloading, setIsloading] = useState(true);
   const [dado, setDado] = useState();
   const [arrayinput, Setarrayinput] = useState([]);
-  const [stock, Setstock] = useState();
 
   async function store(key, value) {
     try {
@@ -66,6 +68,13 @@ export default function Interface({ navigation }) {
       Setstock(dado.split(","));
     }
   }, [dado]);
+  useEffect(() => {
+    if (stock != undefined) {
+      Setlist([{ cityname: stock[0], id: 10 }]);
+    }
+
+    // alert(stock);
+  }, [stock]);
 
   const search = () => {
     //chama api
