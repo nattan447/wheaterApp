@@ -38,6 +38,7 @@ export default function Interface({ navigation }) {
   const [isloading, setIsloading] = useState(true);
   const [dado, setDado] = useState();
   const [arrayinput, Setarrayinput] = useState([]);
+  const [stockarray, Setstockarray] = useState([]);
 
   async function store(key, value) {
     try {
@@ -69,15 +70,22 @@ export default function Interface({ navigation }) {
     }
   }, [dado]);
   useEffect(() => {
+    //aqui eu tento colocar os dados do assynstorage na list da flatlist
     if (stock != undefined) {
-      Setlist([{ cityname: stock[0], id: 10 }]);
+      stock.map((elemento) => {
+        alert(elemento);
+        // const arr = [
+        //   ...list,
+        //   { cityname: elemento, id: Math.floor(Math.random() * 200) },
+        // ];
+        // Setlist(stockarray);
+      });
     }
-
-    // alert(stock);
   }, [stock]);
 
   const search = () => {
     //chama api
+
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${input}&appid=${apiKey}&units=metric`
     )
@@ -134,7 +142,9 @@ export default function Interface({ navigation }) {
     //aqui toda vez que o arrayinput é chamado(chama a função search),todos elementos do array é passado com uma string para o assyncstorage
     let mystr = "";
     arrayinput.map((elemento) => (mystr += elemento + ","));
-    store("name", mystr);
+    if (mystr != undefined) {
+      store("name", mystr);
+    }
   }, [arrayinput]);
 
   function handlerecentplaces(name) {
