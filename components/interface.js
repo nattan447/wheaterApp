@@ -28,9 +28,7 @@ export default function Interface({ navigation }) {
   useEffect(() => {}, []);
   const [stock, Setstock] = useState();
   const [counter, Setcounter] = useState(0);
-  const [list, Setlist] = useState(
-    stock != null ? [{ cityname: stock[0], id: 30 }] : []
-  );
+  const [list, Setlist] = useState([]);
 
   const [input, Setinput] = useState("");
   const handletxt = (text) => Setinput(text);
@@ -67,21 +65,34 @@ export default function Interface({ navigation }) {
     //string passada pelo storage vira array
     if (dado != undefined) {
       Setstock(dado.split(","));
+      //   aqui eu tento colocar os dados do assynstorage na list da flatlist
+      const newItems = dado.split(",").reduce((accumulator, elemento) => {
+        if (elemento !== "") {
+          const newItem = {
+            cityname: elemento,
+            id: Math.floor(Math.random() * 100),
+          };
+          return [...accumulator, newItem];
+        }
+        return accumulator;
+      }, []);
+
+      Setlist(newItems);
     }
   }, [dado]);
-  useEffect(() => {
-    //aqui eu tento colocar os dados do assynstorage na list da flatlist
-    if (stock != undefined) {
-      stock.map((elemento) => {
-        alert(elemento);
-        // const arr = [
-        //   ...list,
-        //   { cityname: elemento, id: Math.floor(Math.random() * 200) },
-        // ];
-        // Setlist(stockarray);
-      });
-    }
-  }, [stock]);
+  // useEffect(() => {
+  //   aqui eu tento colocar os dados do assynstorage na list da flatlist
+  //   if (stock != undefined) {
+  //     stock.map((elemento) => {
+  //       alert(elemento);
+  //       const arr = [
+  //         ...list,
+  //         { cityname: elemento, id: Math.floor(Math.random() * 200) },
+  //       ];
+  //       Setlist(stockarray);
+  //     });
+  //   }
+  // }, [stock]);
 
   const search = () => {
     //chama api
