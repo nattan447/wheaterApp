@@ -18,6 +18,7 @@ export default StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     color: "white",
+    marginBottom: 20,
   },
   cloudsimg: {
     height: 130,
@@ -26,7 +27,7 @@ export default StyleSheet.create({
   infoview: {
     alignItems: "center",
 
-    height: 400,
+    height: 340,
     justifyContent: "center",
     borderRadius: 10,
     width: 360,
@@ -44,5 +45,18 @@ export default StyleSheet.create({
   },
   todayview: {
     alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  statusgeralview: {
+    backgroundColor: "#010E68",
+    borderRadius: 5,
+
+    paddingTop: 13,
+    flex: 1,
+  },
+  minmaxdiv: {
+    alignItems: "center",
+    marginTop: 20,
   },
 });

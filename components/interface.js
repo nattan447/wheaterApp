@@ -12,6 +12,7 @@ import {
   Switch,
   Alert,
 } from "react-native";
+import removeaccent from "remove-accents";
 import { useState, useEffect, useRef } from "react";
 import React from "react";
 import facestyle from "../styles/facestyle";
@@ -76,7 +77,6 @@ export default function Interface({ navigation }) {
         }
         return accumulator;
       }, []);
-
       Setlist(newItems);
     }
   }, [dado]);
@@ -98,7 +98,9 @@ export default function Interface({ navigation }) {
     //chama api
 
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${input}&appid=${apiKey}&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?q=${removeaccent(
+        input
+      )}&appid=${apiKey}&units=metric`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -115,12 +117,18 @@ export default function Interface({ navigation }) {
             state: data.weather[0].main,
             description: data.weather[0].description,
             cityname: input,
+            min_temp: Math.round(data.main.temp_min),
+            max_temp: Math.round(data.main.temp_max),
           },
         });
         //se tiver os dados certos chama a função que cria a lista
         if (data.main.temp != undefined) {
-          //esse estado pega todos os inputs os colocando em um array
-          Setarrayinput((currentvalue) => [...currentvalue, input]);
+          //esse estado pega todos os inputs os colocando em um array e tentando evitar que eles sejam repetidos
+          list.map((elemento) => {
+            if (elemento != input) {
+              Setarrayinput(() => [elemento.cityname, removeaccent(input)]);
+            } else Setarrayinput(removeaccent(input));
+          });
           createlist();
         }
 
@@ -140,11 +148,12 @@ export default function Interface({ navigation }) {
   function createlist() {
     //evita de os lugares recentes aparecam repetidos
     const norepeatname = list.filter(
-      (Elemento) => Elemento.cityname.toLowerCase() != input.toLowerCase()
+      (Elemento) =>
+        Elemento.cityname.toLowerCase() != removeaccent(input).toLowerCase()
     );
     const listobj = [
       ...norepeatname,
-      { cityname: input.toLowerCase(), id: counter },
+      { cityname: removeaccent(input).toLowerCase(), id: counter },
     ];
     Setlist(listobj);
   }
@@ -152,7 +161,9 @@ export default function Interface({ navigation }) {
   useEffect(() => {
     //aqui toda vez que o arrayinput é chamado(chama a função search),todos elementos do array é passado com uma string para o assyncstorage
     let mystr = "";
-    arrayinput.map((elemento) => (mystr += elemento + ","));
+    arrayinput.map((elemento) => {
+      mystr += elemento + ",";
+    });
     if (mystr != undefined) {
       store("name", mystr);
     }
@@ -171,6 +182,8 @@ export default function Interface({ navigation }) {
             state: data.weather[0].main,
             description: data.weather[0].description,
             cityname: name,
+            min_temp: Math.round(data.main.temp_min),
+            max_temp: Math.round(data.main.temp_max),
           },
         });
         SetNodatafound(undefined);
@@ -202,6 +215,16 @@ export default function Interface({ navigation }) {
 
   return (
     <SafeAreaView style={facestyle.container}>
+      <Text
+        style={{
+          color: "white",
+          marginBottom: 30,
+          fontSize: 34,
+          fontWeight: "bold",
+        }}
+      >
+        weatherDATA
+      </Text>
       <View style={facestyle.searchview}>
         <TextInput
           value={input}
